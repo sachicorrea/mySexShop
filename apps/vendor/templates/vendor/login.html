@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Acceder | {% endblock %}
+
+{% block content %}
+    <h1 class="title">Acceder</h1>
+
+    <form method="POST" action=".">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark is-uppercase">Acceder</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

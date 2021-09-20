@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Se un vendedor | {% endblock %}
+
+{% block content %}
+    <h1 class="title">Conviértete en un vendedor</h1>
+
+    <form method="POST" action=".">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark is-uppercase">Registrarse</button>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+    <h2 class="subtitle">Ya tiene una cuenta?</h2>
+
+    <a href="{% url 'login' %}">Acceder</a>
+{% endblock %}

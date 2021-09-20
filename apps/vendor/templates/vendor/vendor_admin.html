@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Vendedor admin | {% endblock %}
+
+{% block content %}
+<div class="box">
+    <h1 class="title">Vendedor admin - {{ vendor.name }}</h1>
+
+    <a href="{% url 'logout' %}" class="button is-danger is-uppercase">Salir</a>
+</div>
+
+<div class="box">
+    <h2 class="is-size-3 mb-4">Mis productos</h2>
+
+    <a href="{% url 'add_product' %}" class="button is-dark is-uppercase mb-6">Agregar producto</a>
+
+    {% if products %}
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td><a href="{% url 'product' product.category.slug product.slug %}">{{ product.title }}</a></td>
+                <td>{{ product.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Usted no tiene ningún producto aún</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}
