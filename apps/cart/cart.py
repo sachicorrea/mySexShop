@@ -2,15 +2,16 @@ from django.conf import settings
 
 from apps.product.models import Product
 
+
 class Cart(object):
     def __init__(self, request):
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
 
-    if not cart:
-        cart = self.session[settings.CART_SESSION_ID] = {}
+        if not cart:
+            cart = self.session[settings.CART_SESSION_ID] = {}
 
-    self.cart = cart
+        self.cart = cart
 
     def __iter__(self):
         for p in self.cart.keys():
@@ -35,7 +36,7 @@ class Cart(object):
 
             if self.cart['product_id']['quantity'] == 0:
                 self.remove(product_id)
-        
+
         self.save()
 
     def remove(self, product_id):
@@ -55,4 +56,5 @@ class Cart(object):
         for p in self.cart.keys():
             self.cart[str(p)]['product'] = Product.objects.get(pk=p)
 
-        return sum(item['quantity'] * item['product'].price for item in self.cart.values())
+        return sum(item['quantity'] * item['product'].price
+                   for item in self.cart.values())
