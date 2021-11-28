@@ -30,4 +30,4 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.id
+        return '%s' % self.id

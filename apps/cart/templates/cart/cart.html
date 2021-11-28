@@ -93,7 +93,7 @@
                 <label>Apellido</label>
 
                 <div class="control">
-                    <input class="input" type="email" name="email">
+                    <input class="input" type="text" name="last_name">
                 </div>
             </div>
 
@@ -144,6 +144,7 @@
     <h2 class="subtitle">Información de pago</h2>
 
     <div id="card-element">
+        <!-- A Stripe Element will be inserted here -->
     </div>
 
     {% if messages %}
@@ -154,7 +155,7 @@
 
     <div class="field">
         <div class="control">
-            <button class="button is-dark mt-4 is-uppercase">Checkout</button>
+            <button class="button is-dark mt-4 is-uppercase">Ordenar</button>
         </div>
     </div>
 </form>
@@ -162,11 +163,9 @@
 {% else %}
 <p>No tienes producto alguno en tu carrito</p>
 {% endif %}
-
 {% endblock %}
 
 {% block scripts %}
-
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
