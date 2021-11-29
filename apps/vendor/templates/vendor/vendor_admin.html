@@ -6,6 +6,12 @@
 <div class="box">
     <h1 class="title">Vendedor admin - {{ vendor.name }}</h1>
 
+    <strong>Mi balance: </strong>{{ vendor.get_balance }}<br>
+    <strong>Mi cantidad pagada: </strong>{{ vendor.get_paid_amount }}<br>
+
+    <hr>
+
+    <a href="{% url 'edit_vendor' %}" class="button is-info is-uppercase">Editar</a>
     <a href="{% url 'logout' %}" class="button is-danger is-uppercase">Salir</a>
 </div>
 
@@ -35,7 +41,57 @@
     {% else %}
     <p>Usted no tiene ningún producto aún</p>
     {% endif %}
+</div>
 
+<div class="box">
+    <h2 class="is-size-3 mb-4">Mis órdenes</h2>
+
+    {% if orders %}
+    {% for order in orders %}
+    <div
+        class="{% if order.fully_paid %}has-background-success-light{% else %} has-background-info-light{% endif %} mb-2 p-4">
+        <div class="columns is-multiline">
+            <div class="column is-6">
+                <h3 class="is-size-4">#{{ order.id }} - {{ order.first_name }} - {{ order.last_name }}</h3>
+            </div>
+
+            <div class="column is-12">
+                <b>Nombre:</b> {{order.first_name }} {{ order.last_name }}<br>
+                <b>Dirección:</b> {{order.address}}<br>
+                <b>Código postal y Ciudad:</b> {{order.zip}} {{ order.place}}<br>
+                <b>E-mail: </b> {{order.email}}<br>
+                <b>Teléfono: </b> {{order.phone}}<br>
+
+                <table class="table is-fullwidth mt-4">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Pago</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in order.items.all %}
+                        {% if item.vendor == request.user.vendor %}
+                        <tr>
+                            <td>{{ item.product.title }}</td>
+                            <td>${{ item.product.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.vendor_paid|yesno:"Si,No" }}</td>
+                            <td>${{ item.get_total_price }}</td>
+                        </tr>
+                        {%endif%}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
 </div>
 
 {% endblock %}
